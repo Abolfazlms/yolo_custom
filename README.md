@@ -25,18 +25,15 @@ Perfect for beginners exploring computer vision, students presenting AI demos, o
 
 ## 📂 Project Structure
 
+```text
 .
 ├── yolo_object_detection.py
 ├── yolov3.cfg
 ├── yolov3.weights
 ├── coco.names
 └── README.md
-
-yaml
-Copy code
-
+```
 ---
-
 ## 📥 Download YOLOv3 Weights
 
 You must download the official YOLOv3 weights:
