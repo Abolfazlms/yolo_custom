@@ -1,32 +1,32 @@
-📦 YOLOv3 Real-Time Object Detection (OpenCV + Python)
+# 📦 YOLOv3 Real-Time Object Detection (OpenCV + Python)
 
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![OpenCV](https://img.shields.io/badge/OpenCV-dnn-red)
+![YOLO](https://img.shields.io/badge/YOLO-v3-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-
-
-
-
-
-
-A real-time object detection system using YOLOv3, OpenCV, and a standard webcam.
-Each detected object is drawn with a unique, consistent class-based color, and labels include confidence percentages.
+A **real-time object detection system** using **YOLOv3**, **OpenCV**, and a standard webcam.  
+Each detected object is drawn with a **unique, consistent class-based color**, and labels include confidence percentages.
 
 Perfect for beginners exploring computer vision, students presenting AI demos, or developers building real-time recognition systems.
 
-🚀 Features
+---
 
-✔️ Real-time detection via webcam
+## 🚀 Features
 
-✔️ YOLOv3 + OpenCV DNN module (no GPU required)
+- ✔️ Real-time detection via webcam  
+- ✔️ YOLOv3 + OpenCV DNN module (no GPU required)  
+- ✔️ Unique & persistent color for every object class  
+- ✔️ Confidence thresholding + Non-Maximum Suppression  
+- ✔️ Modular & clean detection function (`find_objects()`)  
+- ✔️ High-quality bounding boxes and labels  
 
-✔️ Unique & persistent color for every object class
+---
 
-✔️ Confidence thresholding + Non-Maximum Suppression
+## 📂 Project Structure
 
-✔️ User-friendly visualization with bounding boxes and labels
 
-✔️ Clean modular code (find_objects() for detection logic)
 
-📂 Project Structure
 .
 ├── yolo_object_detection.py
 ├── yolov3.cfg
@@ -34,78 +34,91 @@ Perfect for beginners exploring computer vision, students presenting AI demos, o
 ├── coco.names
 └── README.md
 
-📥 Download YOLOv3 Weights
 
-Download the official YOLOv3 weights (required):
+---
 
-🔗 https://pjreddie.com/media/files/yolov3.weights
+## 📥 Download YOLOv3 Weights
 
-(or use your Google Drive link if preferred)
+You must download the official YOLOv3 weights:
 
-Place them in the same folder as the script.
+🔗 https://pjreddie.com/media/files/yolov3.weights  
+(or use the provided Google Drive link)
 
-🛠️ Installation
-1️⃣ Install dependencies
+Place the file **yolov3.weights** in the project folder.
+
+---
+
+## 🛠️ Installation
+
+### 1️⃣ Install dependencies
+
+```bash
 pip install opencv-python numpy
 
 2️⃣ Run the script
 python yolo_object_detection.py
-
+```
 🎮 Controls
 Key	Action
-q	Quit the webcam and close program
+q	Quit the webcam and close the program
 🧠 How It Works
 
-The webcam frame is converted into a YOLO input blob.
+The webcam frame is converted to a YOLO input blob.
 
-The network performs a forward pass to get predictions.
+The YOLO network performs a forward pass and outputs detections.
 
 For each detection:
 
-The class ID is found.
+Class ID is extracted
 
-Confidence is checked.
+Confidence score is checked
 
-Bounding box is scaled to the actual image.
+Bounding box is scaled to the original frame
 
-Non-Maximum Suppression (NMS) removes overlapping detections.
+Non-Maximum Suppression (NMS) removes duplicates.
 
-Each class is drawn using a unique, random but stable BGR color.
+Each detected class is assigned a unique, randomly generated BGR color.
 
 🖼️ Output Example
 
-Real-time bounding boxes look like this:
+You will see labels like:
 
-[PERSON 97%]
-[CHAIR 84%]
-[DOG 91%]
+PERSON 97%
+DOG 91%
+CHAIR 84%
 
 
-Each category has its own color for easy visualization.
+Each category is displayed with a unique color.
 
-📌 Code Highlights
-Unique color per class
+📌 Important Code Snippets
+Unique stable colors for each class
 colors = np.random.uniform(50, 255, size=(len(coco_classes), 3))
 
-Drawing boxes
+Drawing bounding boxes
 cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+cv2.putText(image, label, (x, y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
-Applying NMS
-indices = cv2.dnn.NMSBoxes(bbox, confidences, confidence_threshold, nms_threshold)
+Applying Non-Maximum Suppression
+indices = cv2.dnn.NMSBoxes(bbox, confidences,
+                           confidence_threshold, nms_threshold)
 
-📌 Future Improvements
+🔧 Future Improvements
 
-🔹 Add FPS counter
+Add FPS counter
 
-🔹 Enable GPU acceleration (CUDA build of OpenCV)
+GPU support (CUDA build of OpenCV)
 
-🔹 Add object tracking (SORT / DeepSORT)
+Save detection results
 
-🔹 Save detections to file
+Add object tracking (DeepSORT / SORT)
 
-🔹 Run on video files instead of webcam
+Video file input support
+
+GUI interface
 
 📜 License
 
-MIT License — free to use, modify, and distribute.
+This project is licensed under the MIT License — free to use, modify, and distribute.
+
+Made with ❤️ using OpenCV + YOLOv3
