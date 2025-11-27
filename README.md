@@ -25,8 +25,6 @@ Perfect for beginners exploring computer vision, students presenting AI demos, o
 
 ## 📂 Project Structure
 
-
-
 .
 ├── yolo_object_detection.py
 ├── yolov3.cfg
@@ -34,6 +32,8 @@ Perfect for beginners exploring computer vision, students presenting AI demos, o
 ├── coco.names
 └── README.md
 
+yaml
+Copy code
 
 ---
 
@@ -41,7 +41,7 @@ Perfect for beginners exploring computer vision, students presenting AI demos, o
 
 You must download the official YOLOv3 weights:
 
-🔗 https://pjreddie.com/media/files/yolov3.weights  
+🔗 [Download YOLOv3 weights](https://pjreddie.com/media/files/yolov3.weights)  
 (or use the provided Google Drive link)
 
 Place the file **yolov3.weights** in the project folder.
@@ -54,71 +54,76 @@ Place the file **yolov3.weights** in the project folder.
 
 ```bash
 pip install opencv-python numpy
+```
 
 2️⃣ Run the script
+```bash
 python yolo_object_detection.py
 ```
-🎮 Controls
-Key	Action
-q	Quit the webcam and close the program
-🧠 How It Works
+## 🎮 Controls
 
-The webcam frame is converted to a YOLO input blob.
+| Key  | Action                          |
+|------|---------------------------------|
+| **q** | Quit the webcam and close the program |
 
-The YOLO network performs a forward pass and outputs detections.
+---
 
-For each detection:
+## 🧠 How It Works
 
-Class ID is extracted
+1. The webcam frame is converted to a YOLO input **blob**.  
+2. The YOLO network performs a forward pass and outputs detections.  
+3. For each detection:
+   - Class ID is extracted  
+   - Confidence score is checked  
+   - Bounding box is scaled back to the original frame size  
+4. **Non-Maximum Suppression (NMS)** removes overlapping predictions.  
+5. Unique, stable colors are assigned per class and drawn on the frame.
 
-Confidence score is checked
+---
 
-Bounding box is scaled to the original frame
+## 🖼️ Output Example
 
-Non-Maximum Suppression (NMS) removes duplicates.
-
-Each detected class is assigned a unique, randomly generated BGR color.
-
-🖼️ Output Example
-
-You will see labels like:
+You may see labels like:
 
 PERSON 97%
 DOG 91%
 CHAIR 84%
 
-
 Each category is displayed with a unique color.
 
-📌 Important Code Snippets
-Unique stable colors for each class
-colors = np.random.uniform(50, 255, size=(len(coco_classes), 3))
+---
 
+## 📌 Important Code Snippets
+
+### Unique stable colors for each class
+
+```python
+colors = np.random.uniform(50, 255, size=(len(coco_classes), 3))
 Drawing bounding boxes
+python
+Copy code
 cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
 cv2.putText(image, label, (x, y - 10),
             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
-
 Applying Non-Maximum Suppression
-indices = cv2.dnn.NMSBoxes(bbox, confidences,
-                           confidence_threshold, nms_threshold)
+python
+Copy code
+indices = cv2.dnn.NMSBoxes(
+    bbox, confidences, confidence_threshold, nms_threshold
+)
+```
+---
+## 🔧 Future Improvements
 
-🔧 Future Improvements
+- Add FPS counter  
+- GPU support (CUDA build of OpenCV)  
+- Save detection results  
+- Add object tracking (DeepSORT / SORT)  
+- Video file input support  
+- GUI interface  
 
-Add FPS counter
+---
 
-GPU support (CUDA build of OpenCV)
+## 📜 License
 
-Save detection results
-
-Add object tracking (DeepSORT / SORT)
-
-Video file input support
-
-GUI interface
-
-📜 License
-
-This project is licensed under the MIT License — free to use, modify, and distribute.
-
-Made with ❤️ using OpenCV + YOLOv3
+This project is licensed under the **MIT License** — free to use, modify, and distribute.
